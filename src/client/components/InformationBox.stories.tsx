@@ -31,7 +31,7 @@ export const Default = () => (
 Default.storyName = 'default';
 
 export const WithMarginTop = () => (
-	<InformationBox withMarginTop>
+	<InformationBox>
 		<InformationBoxText>
 			This is some useful stuff in the information box, with a margin top!
 		</InformationBoxText>

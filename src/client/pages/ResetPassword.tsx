@@ -1,18 +1,18 @@
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
 
 import { MinimalLayout } from '../layouts/MinimalLayout';
-import {
-	belowFormMarginTopSpacingStyle,
-	MainForm,
-} from '@/client/components/MainForm';
+import { MainForm } from '@/client/components/MainForm';
 import { EmailInput } from '@/client/components/EmailInput';
-import { InfoSummary } from '@guardian/source-react-components-development-kitchen';
 import locations from '@/shared/lib/locations';
 import { ExternalLink } from '@/client/components/ExternalLink';
 import { buildUrlWithQueryParams } from '@/shared/lib/routeUtils';
 import { QueryParams } from '@/shared/model/QueryParams';
 import { addQueryParamsToUntypedPath } from '@/shared/lib/queryParams';
 import { usePageLoadOphanInteraction } from '@/client/lib/hooks/usePageLoadOphanInteraction';
+import {
+	InformationBox,
+	InformationBoxText,
+} from '@/client/components/InformationBox';
 
 interface ResetPasswordProps {
 	email?: string;
@@ -21,7 +21,7 @@ interface ResetPasswordProps {
 	queryString: QueryParams;
 	formActionOverride?: string;
 	emailInputLabel?: string;
-	showRecentEmailSummary?: boolean;
+	showRecentEmailInformationBox?: boolean;
 	recaptchaSiteKey?: string;
 	formPageTrackingName?: string;
 	formError?: string;
@@ -34,7 +34,7 @@ export const ResetPassword = ({
 	queryString,
 	formActionOverride,
 	emailInputLabel,
-	showRecentEmailSummary,
+	showRecentEmailInformationBox,
 	children,
 	recaptchaSiteKey,
 	formPageTrackingName,
@@ -69,23 +69,23 @@ export const ResetPassword = ({
 				formErrorMessageFromParent={formError}
 			>
 				<EmailInput label={emailInputLabel} defaultValue={email} />
-			</MainForm>
-			{showRecentEmailSummary && (
-				<InfoSummary
-					cssOverrides={belowFormMarginTopSpacingStyle}
-					message="Please make sure that you are opening the most recent email we sent."
-					context={
-						<>
+				{showRecentEmailInformationBox && (
+					<InformationBox>
+						<InformationBoxText>
+							Please make sure that you are opening the most recent email we
+							sent.
+						</InformationBoxText>
+						<InformationBoxText>
 							If you are having trouble, please contact our customer service
 							team using our{' '}
 							<ExternalLink href={locations.REPORT_ISSUE}>
 								Help Centre
 							</ExternalLink>
 							.
-						</>
-					}
-				/>
-			)}
+						</InformationBoxText>
+					</InformationBox>
+				)}
+			</MainForm>
 		</MinimalLayout>
 	);
 };
