@@ -16,6 +16,7 @@ import { buildUrlWithQueryParams } from '@/shared/lib/routeUtils';
 import { CmpConsentedStateHiddenInput } from '../components/CmpConsentStateHiddenInput';
 import { CsrfFormField } from '../components/CsrfFormField';
 import { QueryParams } from '@/shared/model/QueryParams';
+import { consentsFormSubmitOphanTracking } from '../lib/consentsTracking';
 
 const consentToggleCss = css`
 	display: flex;
@@ -97,14 +98,12 @@ export const NewAccountReview = ({
 			<form
 				action={buildUrlWithQueryParams('/welcome/review', {}, queryParams)}
 				method="post"
-				// onSubmit={({ target: form }) => {
-				// 	onboardingFormSubmitOphanTracking(
-				// 		page,
-				// 		pageData,
-				// 		// have to explicitly type as HTMLFormElement as typescript can't infer type of the event.target
-				// 		form as HTMLFormElement,
-				// 	);
-				// }}
+				onSubmit={({ target: form }) => {
+					consentsFormSubmitOphanTracking(
+						form as HTMLFormElement,
+						[profiling, advertising].filter(Boolean) as Consent[],
+					);
+				}}
 			>
 				<CmpConsentedStateHiddenInput cmpConsentedState={hasCmpConsent} />
 				<CsrfFormField />

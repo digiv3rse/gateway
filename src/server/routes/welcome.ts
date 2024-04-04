@@ -327,6 +327,8 @@ router.get(
 					...consentsData,
 				},
 			} as RequestState);
+
+			trackMetric('NewAccountReview::Success');
 		} catch (error) {
 			logger.error(`${req.method} ${req.originalUrl}  Error`, error, {
 				request_id: res.locals.requestId,
@@ -339,11 +341,9 @@ router.get(
 					error: message,
 				},
 			});
-		}
 
-		// trackMetric(
-		// 	consentsPageMetric(page, 'Get', status === 200 ? 'Success' : 'Failure'),
-		// );
+			trackMetric('NewAccountReview::Failure');
+		}
 
 		const html = renderer('/welcome/review', {
 			pageTitle: 'Your data',
@@ -387,7 +387,7 @@ router.post(
 				request_id: res.locals.requestId,
 			});
 
-			// trackMetric(consentsPageMetric(page, 'Post', 'Success'));
+			trackMetric('NewAccountReviewSubmit::Success');
 
 			updateEncryptedStateCookie(req, res, {
 				isCmpConsented: _cmpConsentedState,
@@ -397,6 +397,8 @@ router.post(
 			logger.error(`${req.method} ${req.originalUrl}  Error`, error, {
 				request_id: res.locals.requestId,
 			});
+
+			trackMetric('NewAccountReviewSubmit::Failure');
 		} finally {
 			// if there is a fromURI, we need to complete the oauth flow, so redirect to the fromURI
 			if (fromURI) {
