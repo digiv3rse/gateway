@@ -1,4 +1,4 @@
-import { sendOphanInteractionEvent } from './ophan';
+import { sendOphanInteractionEvent } from '@/client/lib/ophan';
 import { Consent, Consents } from '@/shared/model/Consent';
 import { Newsletters } from '@/shared/model/Newsletter';
 

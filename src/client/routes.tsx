@@ -4,7 +4,7 @@ import { RoutePaths } from '@/shared/model/Routes';
 import { RegistrationPage } from '@/client/pages/RegistrationPage';
 import { ResetPasswordPage } from '@/client/pages/ResetPasswordPage';
 import { EmailSentPage } from '@/client/pages/EmailSentPage';
-import { UnvalidatedEmailEmailSentPage } from './pages/UnvalidatedEmailEmailSentPage';
+import { UnvalidatedEmailEmailSentPage } from '@/client/pages/UnvalidatedEmailEmailSentPage';
 import { NotFoundPage } from '@/client/pages/NotFoundPage';
 import { ChangePasswordPage } from '@/client/pages/ChangePasswordPage';
 import { ChangePasswordCompletePage } from '@/client/pages/ChangePasswordCompletePage';
@@ -30,15 +30,15 @@ import { ChangeEmailCompletePage } from '@/client/pages/ChangeEmailCompletePage'
 import { ChangeEmailErrorPage } from '@/client/pages/ChangeEmailErrorPage';
 import { SubscriptionSuccessPage } from '@/client/pages/SubscriptionSuccessPage';
 import { SubscriptionErrorPage } from '@/client/pages/SubscriptionErrorPage';
-import { ResendConsentEmailPage } from './pages/ResendConsentEmailPage';
+import { ResendConsentEmailPage } from '@/client/pages/ResendConsentEmailPage';
 import { DeleteAccountBlockedPage } from '@/client/pages/DeleteAccountBlockedPage';
 import { DeleteAccountPage } from '@/client/pages/DeleteAccountPage';
-import { DeleteAccountEmailPasswordValidationPage } from './pages/DeleteAccountEmailPasswordValidationPage';
+import { DeleteAccountEmailPasswordValidationPage } from '@/client/pages/DeleteAccountEmailPasswordValidationPage';
 import { DeleteAccountCompletePage } from '@/client/pages/DeleteAccountCompletePage';
-import { RegisterWithEmailPage } from './pages/RegisterWithEmailPage';
-import { WelcomeSocialPage } from './pages/WelcomeSocialPage';
-import { ReturnToAppPage } from './pages/ReturnToAppPage';
-import { NewAccountReviewPage } from './pages/NewAccountReviewPage';
+import { RegisterWithEmailPage } from '@/client/pages/RegisterWithEmailPage';
+import { WelcomeSocialPage } from '@/client/pages/WelcomeSocialPage';
+import { ReturnToAppPage } from '@/client/pages/ReturnToAppPage';
+import { NewAccountReviewPage } from '@/client/pages/NewAccountReviewPage';
 
 export type RoutingConfig = {
 	clientState: ClientState;
