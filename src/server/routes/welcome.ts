@@ -42,11 +42,11 @@ import { RegistrationConsents } from '@/shared/model/RegistrationConsents';
 import { RegistrationNewslettersFormFields } from '@/shared/model/Newsletter';
 import { updateRegistrationPlatform } from '@/server/lib/registrationPlatform';
 import { getAppName, isAppPrefix } from '@/shared/lib/appNameUtils';
-import { isStringBoolean } from '../lib/isStringBoolean';
+import { isStringBoolean } from '@/server/lib/isStringBoolean';
 import {
 	updateRegistrationLocationViaIDAPI,
 	updateRegistrationLocationViaOkta,
-} from '../lib/updateRegistrationLocation';
+} from '@/server/lib/updateRegistrationLocation';
 
 const { okta } = getConfiguration();
 
