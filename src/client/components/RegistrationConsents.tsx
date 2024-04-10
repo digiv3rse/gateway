@@ -1,12 +1,11 @@
 import React from 'react';
 import { RegistrationConsentsFormFields } from '@/shared/model/Consent';
 import { RegistrationNewslettersFormFields } from '@/shared/model/Newsletter';
-import { css } from '@emotion/react';
 import { RegistrationNewsletterFormField } from '@/client/components/RegistrationNewsletterFormField';
-import { remSpace } from '@guardian/source-foundations';
 import { GeoLocation } from '@/shared/model/Geolocation';
 import { AppName } from '@/shared/lib/appNameUtils';
 import { RegistrationMarketingConsentFormField } from '@/client/components/RegistrationMarketingConsentFormField';
+import { ToggleSwitchList } from '@/client/components/ToggleSwitchList';
 
 interface RegistrationConsentsProps {
 	geolocation?: string;
@@ -14,13 +13,6 @@ interface RegistrationConsentsProps {
 	noMarginBottom?: boolean;
 	appName?: AppName;
 }
-
-const consentToggleCss = css`
-	display: flex;
-	flex-direction: column;
-	gap: ${remSpace[3]};
-	margin-top: ${remSpace[3]};
-`;
 
 export const RegistrationConsents = ({
 	geolocation,
@@ -50,7 +42,7 @@ export const RegistrationConsents = ({
 	}
 
 	return (
-		<div css={consentToggleCss}>
+		<ToggleSwitchList>
 			{showSaturdayEdition && (
 				<RegistrationNewsletterFormField
 					id={RegistrationNewslettersFormFields.saturdayEdition.id}
@@ -75,6 +67,6 @@ export const RegistrationConsents = ({
 					}
 				/>
 			)}
-		</div>
+		</ToggleSwitchList>
 	);
 };

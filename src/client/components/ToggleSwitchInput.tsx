@@ -1,6 +1,5 @@
 import React from 'react';
 import type { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import type { Props } from '@guardian/source-react-components';
 import { css } from '@emotion/react';
 import {
 	textSans,
@@ -153,7 +152,7 @@ const descriptionStyles = css`
 	align-items: center;
 `;
 
-export interface ToggleSwitchInputProps extends Props {
+export interface ToggleSwitchInputProps {
 	/**
 	 * Whether the ToggleSwitch is checked.
 	 * Gateway uses the [uncontrolled approach](https://reactjs.org/docs/uncontrolled-components.html),
@@ -171,7 +170,7 @@ export interface ToggleSwitchInputProps extends Props {
 	/**
 	 * Long description of the context of the switch. Appears below the title, if provided.
 	 */
-	description: string;
+	description?: string;
 	/**
 	 * Optional image to display to the left of the context
 	 */
@@ -183,12 +182,11 @@ export const ToggleSwitchInput = ({
 	title,
 	defaultChecked,
 	description,
-	cssOverrides,
 }: ToggleSwitchInputProps): EmotionJSX.Element => {
 	const switchName = id ?? generateSourceId();
 	const labelId = descriptionId(switchName);
 	return (
-		<label id={labelId} css={[labelStyles, siblingStyles, cssOverrides]}>
+		<label id={labelId} css={[labelStyles, siblingStyles]}>
 			<span css={labelTextContainerStyles}>
 				{title && <span css={titleStyles}>{title}</span>}
 				{description && <span css={descriptionStyles}>{description}</span>}

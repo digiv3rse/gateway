@@ -2,6 +2,7 @@ import React from 'react';
 import { from, palette, remSpace } from '@guardian/source-foundations';
 import { css } from '@emotion/react';
 import { SvgGuardianLogo } from '@guardian/source-react-components';
+import jobsLogo from '@/client/assets/jobs/jobs-logo.png';
 
 const headerStyles = css`
 	border-bottom: 1px solid ${palette.neutral[46]};
@@ -22,12 +23,26 @@ const logoStyles = css`
 	}
 `;
 
-export const MinimalHeader = () => {
+const jobsLogoStyles = css`
+	height: 2rem;
+	display: flex;
+	${from.desktop} {
+		height: 3.5rem;
+	}
+`;
+
+const JobsLogo = () => (
+	<img src={jobsLogo} alt="The Guardian Jobs logo" css={jobsLogoStyles} />
+);
+
+interface Props {
+	isJobs?: boolean;
+}
+
+export const MinimalHeader = ({ isJobs }: Props) => {
 	return (
 		<header css={headerStyles}>
-			<div css={logoStyles}>
-				<SvgGuardianLogo />
-			</div>
+			<div css={logoStyles}>{isJobs ? <JobsLogo /> : <SvgGuardianLogo />}</div>
 		</header>
 	);
 };

@@ -1,4 +1,9 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, {
+	PropsWithChildren,
+	ReactNode,
+	useEffect,
+	useState,
+} from 'react';
 import {
 	SvgAlertRound,
 	SvgInfoRound,
@@ -229,6 +234,7 @@ const isBreached = AwesomeDebouncePromise(
 );
 
 export const PasswordForm = ({
+	children,
 	submitUrl,
 	fieldErrors,
 	submitButtonText,
@@ -240,7 +246,7 @@ export const PasswordForm = ({
 	formTrackingName,
 	formError,
 	browserName,
-}: Props) => {
+}: PropsWithChildren<Props>) => {
 	const [password, setPassword] = useState<string>('');
 	const [error, setError] = useState<string | undefined>(
 		fieldErrors.find((fieldError) => fieldError.field === 'password')?.message,
@@ -321,6 +327,7 @@ export const PasswordForm = ({
 			disableOnSubmit={true}
 			formErrorMessageFromParent={formError}
 		>
+			{children}
 			<PasswordInput
 				error={error}
 				label={labelText}

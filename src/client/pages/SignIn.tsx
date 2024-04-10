@@ -102,8 +102,8 @@ export const SignIn = ({
 			errorOverride={pageError}
 			errorContext={getErrorContext(pageError)}
 			pageHeader="Sign in"
-			pageSubText="One account to access all Guardian products."
 		>
+			<MainBodyText>One account to access all Guardian products.</MainBodyText>
 			{/* AuthProviderButtons component with show boolean */}
 			{showAuthProviderButtons(socialSigninBlocked, queryParams, isJobs)}
 			<MainForm

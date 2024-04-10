@@ -1,10 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { space, until } from '@guardian/source-foundations';
-import {
-	LinkButton,
-	SvgArrowRightStraight,
-} from '@guardian/source-react-components';
+import { until } from '@guardian/source-foundations';
+import { LinkButton } from '@guardian/source-react-components';
 import { PasswordForm } from '@/client/components/PasswordForm';
 import { FieldError } from '@/shared/model/ClientState';
 import { getAutoRow, passwordFormSpanDef } from '@/client/styles/Grid';
@@ -12,8 +9,8 @@ import { buildUrlWithQueryParams } from '@/shared/lib/routeUtils';
 import NameInputField from '@/client/components/NameInputField';
 import { useNameInputFieldError } from '@/client/lib/hooks/useNameFieldInputError';
 import { QueryParams } from '@/shared/model/QueryParams';
-import { MainLayout } from '@/client/layouts/Main';
 import { MainBodyText } from '@/client/components/MainBodyText';
+import { MinimalLayout } from '@/client/layouts/MinimalLayout';
 
 type Props = {
 	submitUrl: string;
@@ -26,7 +23,7 @@ type Props = {
 };
 
 const linkButton = css`
-	margin-top: ${space[3]}px;
+	justify-content: center;
 `;
 
 const emailSpan = css`
@@ -63,10 +60,11 @@ export const Welcome = ({
 	const messageContext = isJobs ? 'Details' : 'Password';
 
 	return (
-		<MainLayout
+		<MinimalLayout
 			pageHeader={isJobs ? 'Complete your account' : 'Create your password'}
 			errorOverride={nameFieldError}
 			errorContext={nameFieldErrorContext}
+			isJobs={isJobs}
 		>
 			<MainBodyText>
 				{passwordSet
@@ -74,7 +72,7 @@ export const Welcome = ({
 					: `${messageAction} for `}
 				{email ? (
 					<>
-						Guardian account: <span css={emailSpan}>{email}</span>
+						Guardian account: <strong css={emailSpan}>{email}</strong>
 					</>
 				) : (
 					'your new account.'
@@ -85,8 +83,6 @@ export const Welcome = ({
 					css={linkButton}
 					href={buildUrlWithQueryParams('/welcome/review', {}, queryParams)}
 					priority="primary"
-					icon={<SvgArrowRightStraight />}
-					iconSide="right"
 				>
 					Complete creating account
 				</LinkButton>
@@ -105,6 +101,6 @@ export const Welcome = ({
 					{isJobs && <NameInputField onGroupError={setGroupError} />}
 				</PasswordForm>
 			)}
-		</MainLayout>
+		</MinimalLayout>
 	);
 };

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { space, textSans } from '@guardian/source-foundations';
+import { space } from '@guardian/source-foundations';
 import { TextInput } from '@guardian/source-react-components';
 
 import React, { FieldsetHTMLAttributes, useState, useEffect } from 'react';
@@ -13,10 +13,9 @@ const fieldSpacing = css`
 `;
 
 const fieldset = css`
-	border: 0;
+	border: none;
+	margin: 0;
 	padding: 0;
-	margin: ${space[2]}px 0 ${space[2]}px 0;
-	${textSans.medium()}
 `;
 
 interface NameInputProps {

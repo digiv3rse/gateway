@@ -34,10 +34,8 @@ export const Registration = ({ queryParams }: RegistrationProps) => {
 	usePageLoadOphanInteraction(formTrackingName);
 
 	return (
-		<MinimalLayout
-			pageHeader="Create a free account"
-			pageSubText="One account to access all Guardian products."
-		>
+		<MinimalLayout pageHeader="Create a free account">
+			<MainBodyText>One account to access all Guardian products.</MainBodyText>
 			<RegistrationTerms isJobs={isJobs} />
 			<AuthProviderButtons
 				queryParams={queryParams}

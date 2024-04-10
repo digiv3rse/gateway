@@ -100,6 +100,7 @@ export const JobsTermsAccept: React.FC<JobsTermsAcceptProps> = ({
 			pageHeader="Welcome to Guardian&nbsp;Jobs"
 			errorOverride={nameFieldError}
 			errorContext={nameFieldErrorContext}
+			isJobs={true}
 		>
 			{showOnlyNameFields ? (
 				<>

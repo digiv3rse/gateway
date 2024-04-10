@@ -17,7 +17,7 @@ export const Default = (args: MinimalLayoutProps) => (
 
 Default.args = {
 	pageHeader: 'A heading',
-	pageSubText: 'One account to access all Guardian products.',
+	pageSubText: "This is subtext. You might not get it, it's pretty subtle.",
 };
 
 export const WithInfoBox = (args: MinimalLayoutProps) => (
@@ -32,5 +32,27 @@ WithInfoBox.storyName = 'with info box';
 
 WithInfoBox.args = {
 	pageHeader: 'A heading',
-	pageSubText: 'One account to access all Guardian products.',
+	pageSubText: "This is subtext. You might not get it, it's pretty subtle.",
+};
+
+export const WithErrorMessage = (args: MinimalLayoutProps) => (
+	<MinimalLayout
+		{...args}
+		errorOverride="An error occurred"
+		errorContext="Some additional context."
+	/>
+);
+
+WithErrorMessage.args = {
+	pageHeader: 'A heading',
+	pageSubText: "This is subtext. You might not get it, it's pretty subtle.",
+};
+
+export const WithSuccessMessage = (args: MinimalLayoutProps) => (
+	<MinimalLayout {...args} successOverride="Success!" />
+);
+
+WithSuccessMessage.args = {
+	pageHeader: 'A heading',
+	pageSubText: "This is subtext. You might not get it, it's pretty subtle.",
 };

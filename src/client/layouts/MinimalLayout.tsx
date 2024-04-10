@@ -1,12 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import { MinimalHeader } from '../components/MinimalHeader';
-import {
-	from,
-	headline,
-	remSpace,
-	textSans,
-} from '@guardian/source-foundations';
+import { from, headline, remSpace } from '@guardian/source-foundations';
 import useClientState from '../lib/hooks/useClientState';
 import {
 	ErrorSummary,
@@ -19,11 +14,11 @@ import { mainSectionStyles } from '../styles/Shared';
 export interface MinimalLayoutProps {
 	children: React.ReactNode;
 	pageHeader: string;
-	pageSubText?: string;
 	successOverride?: string;
 	errorOverride?: string;
 	errorContext?: React.ReactNode;
 	showErrorReportUrl?: boolean;
+	isJobs?: boolean;
 }
 
 const mainStyles = css`
@@ -45,46 +40,34 @@ const pageHeaderStyles = css`
 	margin: 0;
 `;
 
-const pageSubTextStyles = css`
-	${textSans.small()};
-	margin: 0;
-	color: var(--color-text);
-`;
-
 export const MinimalLayout = ({
 	children,
 	pageHeader,
-	pageSubText,
 	successOverride,
 	errorOverride,
 	errorContext,
 	showErrorReportUrl = false,
+	isJobs,
 }: MinimalLayoutProps) => {
 	const clientState = useClientState();
-	const {
-		globalMessage: { error, success } = {},
-		// pageData: { isNativeApp } = {},
-	} = clientState;
+	const { globalMessage: { error, success } = {} } = clientState;
 
 	const successMessage = successOverride || success;
 	const errorMessage = errorOverride || error;
 
-	// const hasSummary = !!(errorMessage || successMessage);
-	// const hasTitleOrSummary = !!(pageHeader || hasSummary);
-
 	return (
 		<>
 			<Theme />
-			<MinimalHeader />
+			<MinimalHeader isJobs={isJobs} />
 			<main css={mainStyles}>
-				<header>
-					<h1 css={pageHeaderStyles}>{pageHeader}</h1>
-				</header>
+				{pageHeader && (
+					<header>
+						<h1 css={pageHeaderStyles}>{pageHeader}</h1>
+					</header>
+				)}
 				<section css={mainSectionStyles}>
-					{pageSubText && <p css={pageSubTextStyles}>{pageSubText}</p>}
 					{errorMessage && (
 						<ErrorSummary
-							// cssOverrides={summaryStyles(errorSmallMarginBottom)}
 							message={errorMessage}
 							context={errorContext}
 							errorReportUrl={
@@ -93,10 +76,7 @@ export const MinimalLayout = ({
 						/>
 					)}
 					{successMessage && !errorMessage && (
-						<SuccessSummary
-							// cssOverrides={summaryStyles(errorSmallMarginBottom)}
-							message={successMessage}
-						/>
+						<SuccessSummary message={successMessage} />
 					)}
 					{children}
 				</section>
