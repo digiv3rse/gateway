@@ -10,6 +10,7 @@ const config = {
 		'@storybook/addon-webpack5-compiler-babel',
 		'@storybook/addon-styling-webpack',
 		'@storybook/addon-themes',
+		'storybook-addon-render-modes',
 	],
 	previewHead: (head) => `
     ${head}

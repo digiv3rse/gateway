@@ -113,7 +113,7 @@
 		"sharp": "^0.33.3",
 		"snyk": "^1.1287.0",
 		"storybook": "^8.0.6",
-		"storybook-addon-css-user-preferences": "^0.0.3",
+		"storybook-addon-render-modes": "^0.0.10",
 		"swc-loader": "^0.2.6",
 		"terser-webpack-plugin": "^5.3.10",
 		"ts-jest": "^29.1.2",
