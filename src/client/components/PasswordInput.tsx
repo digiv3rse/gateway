@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import { height, focusHalo } from '@guardian/source-foundations';
 import { disableAutofillBackground } from '@/client/styles/Shared';
+import { textInputTheme } from '../styles/Theme';
 
 export type PasswordAutoComplete = 'new-password' | 'current-password';
 
@@ -172,12 +173,7 @@ export const PasswordInput = ({
 						disableAutofillBackground,
 						hideMsReveal(displayEye),
 					]}
-					theme={{
-						textLabel: 'var(--color-input-label)',
-						textUserInput: 'var(--color-input-text)',
-						border: 'var(--color-input-border)',
-						backgroundInput: 'var(--color-input-background)',
-					}}
+					theme={textInputTheme}
 				/>
 			</div>
 

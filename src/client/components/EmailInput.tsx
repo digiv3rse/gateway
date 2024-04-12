@@ -5,6 +5,7 @@ import {
 	InputFieldState,
 	useInputValidityState,
 } from '@/client/lib/hooks/useInputValidityState';
+import { textInputTheme } from '../styles/Theme';
 
 interface EmailInputProps extends Omit<TextInputProps, 'label'> {
 	label?: string;
@@ -47,12 +48,7 @@ export const EmailInput: React.FC<EmailInputProps> = ({
 				onBlur={onBlur}
 				onInput={onInput}
 				onInvalid={onInvalid}
-				theme={{
-					textLabel: 'var(--color-input-label)',
-					textUserInput: 'var(--color-input-text)',
-					border: 'var(--color-input-border)',
-					backgroundInput: 'var(--color-input-background)',
-				}}
+				theme={textInputTheme}
 				{...rest}
 			/>
 		</div>

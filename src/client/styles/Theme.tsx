@@ -2,6 +2,22 @@ import React from 'react';
 import { Global, css } from '@emotion/react';
 import { palette } from '@guardian/source-foundations';
 
+// Used as the `theme` prop in our Source input components.
+export const textInputTheme = {
+	textLabel: 'var(--color-input-label)',
+	textUserInput: 'var(--color-input-text)',
+	border: 'var(--color-input-border)',
+	backgroundInput: 'var(--color-input-background)',
+	/* TODO: textError sets the color of both the input text and the error message,
+		which isn't ideal - we'd prefer to have the input text always the same
+		color. So this is a workaround for now. */
+	textError: 'var(--color-input-error)',
+	borderError: 'var(--color-input-error)',
+	/* Same issue as textError */
+	textSuccess: 'var(--color-input-success)',
+	borderSuccess: 'var(--color-input-success)',
+};
+
 export const Theme = () => {
 	return (
 		<Global
@@ -28,6 +44,8 @@ export const Theme = () => {
 					--color-input-background: ${palette.neutral[100]};
 					--color-input-text: ${palette.brand[400]};
 					--color-input-label: ${palette.brand[400]};
+					--color-input-error: ${palette.error[400]};
+					--color-input-success: ${palette.success[400]};
 					--color-toggle-inactive-background: ${palette.neutral[46]};
 					--color-toggle-inactive-switch: ${palette.neutral[100]};
 					--color-toggle-active-background: ${palette.success[400]};
@@ -59,6 +77,8 @@ export const Theme = () => {
 						--color-input-background: ${palette.neutral[0]};
 						--color-input-text: ${palette.neutral[86]};
 						--color-input-label: ${palette.neutral[86]};
+						--color-input-error: ${palette.error[500]};
+						--color-input-success: ${palette.success[500]};
 						--color-toggle-inactive-background: ${palette.neutral[60]};
 						--color-toggle-inactive-switch: ${palette.neutral[0]};
 						--color-toggle-active-background: ${palette.success[400]};
