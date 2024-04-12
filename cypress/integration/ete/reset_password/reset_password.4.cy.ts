@@ -20,7 +20,7 @@ describe('Password reset flow', () => {
 
 					cy.interceptRecaptcha();
 
-					cy.contains('Forgot password');
+					cy.contains('Reset password');
 					cy.get('input[name=email]').type(emailAddress);
 
 					// Check that both reCAPTCHA errors are shown.
@@ -35,7 +35,7 @@ describe('Password reset flow', () => {
 
 					// Continue checking the password reset flow after reCAPTCHA assertions above.
 					cy.get('[data-cy="main-form-submit-button"]').click();
-					cy.contains('Check your email inbox');
+					cy.contains('Check your inbox');
 					cy.checkForEmailAndGetDetails(
 						emailAddress,
 						timeRequestWasMade,
@@ -71,7 +71,7 @@ describe('Password reset flow', () => {
 
 					cy.interceptRecaptcha();
 
-					cy.contains('Forgot password');
+					cy.contains('Reset password');
 					cy.get('input[name=email]').type(emailAddress);
 
 					// Check that both reCAPTCHA errors are shown.
@@ -86,7 +86,7 @@ describe('Password reset flow', () => {
 
 					// Continue checking the password reset flow after reCAPTCHA assertions above.
 					cy.get('[data-cy="main-form-submit-button"]').click();
-					cy.contains('Check your email inbox');
+					cy.contains('Check your inbox');
 					cy.checkForEmailAndGetDetails(
 						emailAddress,
 						timeRequestWasMade,
@@ -105,10 +105,10 @@ describe('Password reset flow', () => {
 	context('No Account', () => {
 		it('shows the email sent page with link to register when attempting to reset password', () => {
 			cy.visit('/reset-password?useIdapi=true');
-			cy.contains('Forgot password');
+			cy.contains('Reset password');
 			cy.get('input[name=email]').type('invalid@doesnotexist.com');
 			cy.get('[data-cy="main-form-submit-button"]').click();
-			cy.contains('Check your email inbox');
+			cy.contains('Check your inbox');
 			cy.contains('Register for free');
 		});
 	});
@@ -144,7 +144,7 @@ describe('Password set flow', () => {
 
 					// Continue checking the password reset flow after reCAPTCHA assertions above.
 					cy.contains('Send me a link').click();
-					cy.contains('Check your email inbox');
+					cy.contains('Check your inbox');
 					cy.contains(emailAddress);
 					cy.contains('send again');
 					cy.contains('try another address');
@@ -163,7 +163,7 @@ describe('Password set flow', () => {
 					// send again
 					const timeRequestWasMadeResend = new Date();
 					cy.contains('send again').click();
-					cy.contains('Check your email inbox');
+					cy.contains('Check your inbox');
 					cy.contains(emailAddress);
 					cy.checkForEmailAndGetDetails(
 						emailAddress,
