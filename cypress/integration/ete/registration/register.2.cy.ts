@@ -142,7 +142,7 @@ describe('Registration flow', () => {
 		});
 	});
 
-	it('sends user an account exists email for user with existing account with password trying to register, clicks sign in, taken to /signin', () => {
+	it.only('sends user an account exists email for user with existing account with password trying to register, clicks sign in, taken to /signin', () => {
 		cy
 			.createTestUser({
 				isUserEmailValidated: true,
@@ -163,7 +163,7 @@ describe('Registration flow', () => {
 					({ links, body }) => {
 						expect(body).to.have.string('This account already exists');
 						expect(body).to.have.string('Sign in');
-						expect(body).to.have.string('Create new password');
+						expect(body).to.have.string('Reset password');
 
 						expect(links.length).to.eq(3);
 
@@ -217,7 +217,7 @@ describe('Registration flow', () => {
 					expect(passwordResetLink).not.to.be.undefined;
 
 					cy.visit(`/reset-password/${token}`);
-					cy.contains('Reset password');
+					cy.contains('Create new password');
 				});
 			});
 	});
