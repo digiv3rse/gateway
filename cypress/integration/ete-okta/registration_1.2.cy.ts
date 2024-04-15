@@ -512,7 +512,7 @@ describe('Registration flow - Split 1/2', () => {
 							);
 							cy.visit(resetPasswordLink?.href as string);
 							cy.contains(emailAddress);
-							cy.contains('Reset password');
+							cy.contains('Create new password');
 						});
 					});
 				});
@@ -555,7 +555,7 @@ describe('Registration flow - Split 1/2', () => {
 							);
 							cy.visit(resetPasswordLink?.href as string);
 							cy.contains(emailAddress);
-							cy.contains('Reset password');
+							cy.contains('Create new password');
 						});
 					});
 				});
@@ -603,7 +603,7 @@ describe('Registration flow - Split 1/2', () => {
 								.and.not.to.have.string('useOkta=true');
 							cy.visit(resetPasswordLink?.href as string);
 							cy.contains(emailAddress);
-							cy.contains('Reset password');
+							cy.contains('Create new password');
 						});
 					});
 				});
@@ -645,7 +645,7 @@ describe('Registration flow - Split 1/2', () => {
 									'useOkta=true',
 								);
 								cy.visit(resetPasswordLink?.href as string);
-								cy.contains('Reset password');
+								cy.contains('Create new password');
 								cy.contains(emailAddress);
 							});
 						});
@@ -689,7 +689,7 @@ describe('Registration flow - Split 1/2', () => {
 									'useOkta=true',
 								);
 								cy.visit(resetPasswordLink?.href as string);
-								cy.contains('Reset password');
+								cy.contains('Create new password');
 								cy.contains(emailAddress);
 							});
 						});

@@ -455,7 +455,7 @@ describe('Password reset flow in Okta', () => {
 								'useOkta=true',
 							);
 							cy.visit(resetPasswordLink?.href as string);
-							cy.contains('Reset password');
+							cy.contains('Create new password');
 							cy.contains(emailAddress);
 
 							cy.get('input[name=password]').type(randomPassword());
@@ -507,7 +507,7 @@ describe('Password reset flow in Okta', () => {
 								'useOkta=true',
 							);
 							cy.visit(resetPasswordLink?.href as string);
-							cy.contains('Reset password');
+							cy.contains('Create new password');
 							cy.contains(emailAddress);
 
 							cy.get('input[name=password]').type(randomPassword());
