@@ -10,10 +10,13 @@ import {
 import locations from '@/shared/lib/locations';
 import { Theme } from '../styles/Theme';
 import { mainSectionStyles } from '../styles/Shared';
+import { DecorativeImageId } from '../assets/decorative';
+import { MinimalLayoutImage } from '../components/MinimalLayoutImage';
 
 export interface MinimalLayoutProps {
 	children: React.ReactNode;
 	pageHeader: string;
+	imageId?: DecorativeImageId;
 	successOverride?: string;
 	errorOverride?: string;
 	errorContext?: React.ReactNode;
@@ -43,6 +46,7 @@ const pageHeaderStyles = css`
 export const MinimalLayout = ({
 	children,
 	pageHeader,
+	imageId,
 	successOverride,
 	errorOverride,
 	errorContext,
@@ -60,6 +64,7 @@ export const MinimalLayout = ({
 			<Theme />
 			<MinimalHeader isJobs={isJobs} />
 			<main css={mainStyles}>
+				{imageId && <MinimalLayoutImage id={imageId} />}
 				{pageHeader && (
 					<header>
 						<h1 css={pageHeaderStyles}>{pageHeader}</h1>

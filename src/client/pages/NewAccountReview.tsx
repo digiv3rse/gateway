@@ -102,7 +102,10 @@ export const NewAccountReview = ({
 
 	if (!profiling && !advertising) {
 		return (
-			<MinimalLayout pageHeader="You're signed in! Welcome to the Guardian.">
+			<MinimalLayout
+				pageHeader="You're signed in! Welcome to the Guardian."
+				imageId="welcome"
+			>
 				<form
 					action={buildUrlWithQueryParams('/welcome/review', {}, queryParams)}
 					method="post"
@@ -117,7 +120,10 @@ export const NewAccountReview = ({
 		);
 	}
 	return (
-		<MinimalLayout pageHeader="You're signed in! Welcome to the Guardian.">
+		<MinimalLayout
+			pageHeader="You're signed in! Welcome to the Guardian."
+			imageId="welcome"
+		>
 			<MainBodyText>
 				Before you start, confirm how you’d like the Guardian to use your
 				signed-in data.

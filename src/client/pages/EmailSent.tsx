@@ -56,6 +56,7 @@ export const EmailSent = ({
 				recaptchaErrorMessage ? recaptchaErrorMessage : errorMessage
 			}
 			errorContext={recaptchaErrorContext}
+			imageId="email"
 		>
 			{children}
 			{email ? (
