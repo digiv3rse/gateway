@@ -104,7 +104,7 @@ describe('Password set/create flow', () => {
 				],
 			});
 			cy.visit('/set-password/fake_token?useIdapi=true');
-			cy.contains('Link expired');
+			cy.contains('This link has expired');
 		});
 
 		it('does not allow email resend if reCAPTCHA check fails', () => {
@@ -117,7 +117,7 @@ describe('Password set/create flow', () => {
 				],
 			});
 			cy.visit('/set-password/fake_token?useIdapi=true');
-			cy.contains('Link expired');
+			cy.contains('This link has expired');
 			cy.get('input[name="email"]').type('some@email.com');
 			cy.intercept('POST', 'https://www.google.com/recaptcha/api2/**', {
 				statusCode: 500,
@@ -227,7 +227,7 @@ describe('Password set/create flow', () => {
 		it('displays the password resend page', () => {
 			cy.mockNext(500);
 			cy.visit('/set-password/fake_token?useIdapi=true');
-			cy.contains('Link expired');
+			cy.contains('This link has expired');
 		});
 	});
 

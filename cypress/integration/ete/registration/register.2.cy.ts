@@ -163,7 +163,7 @@ describe('Registration flow', () => {
 					({ links, body }) => {
 						expect(body).to.have.string('This account already exists');
 						expect(body).to.have.string('Sign in');
-						expect(body).to.have.string('Reset password');
+						expect(body).to.have.string('Create new password');
 
 						expect(links.length).to.eq(3);
 

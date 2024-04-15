@@ -39,7 +39,7 @@ describe('Password reset flow', () => {
 			const { email } = this.users.validEmail;
 			cy.mockNext(200);
 			page.submitEmailAddress(email);
-			cy.contains('Check your email');
+			cy.contains('Check your inbox');
 		});
 	});
 
