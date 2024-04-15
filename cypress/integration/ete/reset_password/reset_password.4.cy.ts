@@ -109,7 +109,7 @@ describe('Password reset flow', () => {
 			cy.get('input[name=email]').type('invalid@doesnotexist.com');
 			cy.get('[data-cy="main-form-submit-button"]').click();
 			cy.contains('Check your inbox');
-			cy.contains('Register for free');
+			cy.contains('Create an account for free');
 		});
 	});
 });
