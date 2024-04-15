@@ -22,5 +22,7 @@ const imageStyles = (id: DecorativeImageId) => css`
 `;
 
 export const MinimalLayoutImage = ({ id }: Props) => {
-	return <img alt="" css={imageStyles(id)} />;
+	// WCAG H67: Use null alt text for decorative images
+	// ARIA: role="presentation" removes element from accessibility tree
+	return <img alt="" css={imageStyles(id)} role="presentation" />;
 };
