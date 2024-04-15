@@ -142,7 +142,7 @@ describe('Registration flow', () => {
 		});
 	});
 
-	it.only('sends user an account exists email for user with existing account with password trying to register, clicks sign in, taken to /signin', () => {
+	it('sends user an account exists email for user with existing account with password trying to register, clicks sign in, taken to /signin', () => {
 		cy
 			.createTestUser({
 				isUserEmailValidated: true,
