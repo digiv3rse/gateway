@@ -30,10 +30,6 @@ type Props = {
 
 const sendAgainFormWrapperStyles = css`
 	white-space: nowrap;
-	button,
-	button:hover {
-		color: var(--color-link);
-	}
 `;
 
 export const EmailSent = ({
