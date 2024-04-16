@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { space } from '@guardian/source-foundations';
 import { TextInput } from '@guardian/source-react-components';
+import { textInputFocusStyles } from '@/client/styles/Shared';
 
 import React, { FieldsetHTMLAttributes, useState, useEffect } from 'react';
 import {
@@ -46,7 +47,7 @@ const FirstNameInput = (props: NameInputProps) => {
 			name="firstName"
 			type="text"
 			autoComplete="given-name"
-			css={fieldSpacing}
+			css={[fieldSpacing, textInputFocusStyles(inputFieldState)]}
 			onBlur={onBlur}
 			onInput={onInput}
 			onInvalid={onInvalid}
@@ -79,6 +80,7 @@ const SecondNameInput = (props: NameInputProps) => {
 			name="secondName"
 			type="text"
 			autoComplete="family-name"
+			css={textInputFocusStyles(inputFieldState)}
 			onBlur={onBlur}
 			onInput={onInput}
 			onInvalid={onInvalid}

@@ -5,7 +5,7 @@ import {
 } from '@guardian/source-react-components';
 import React, { useState } from 'react';
 import { css } from '@emotion/react';
-import { height, focusHalo } from '@guardian/source-foundations';
+import { height, focusHalo, textSans } from '@guardian/source-foundations';
 import { disableAutofillBackground } from '@/client/styles/Shared';
 import { textInputTheme } from '../styles/Theme';
 
@@ -19,30 +19,6 @@ export type PasswordInputProps = {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	autoComplete?: PasswordAutoComplete;
 };
-
-// remove the border and shorten the width of the text input box so the text does not overlap the password eye
-const paddingRight = (isEyeDisplayedOnBrowser: boolean) => css`
-	padding-right: ${isEyeDisplayedOnBrowser ? 28 : 0}px;
-`;
-
-// fix password input border radius to hide right side of the radius
-const borderFix = (isEyeDisplayedOnBrowser: boolean) =>
-	isEyeDisplayedOnBrowser
-		? css`
-				border-radius: 4px 0 0 4px;
-			`
-		: css();
-
-// we cut off the right hand side of the border when the eye symbol is displayed.
-const noBorder = (isEyeDisplayedOnBrowser: boolean) =>
-	isEyeDisplayedOnBrowser
-		? css`
-				border-right: none;
-				:active {
-					border-right: none;
-				}
-			`
-		: css();
 
 // hide the microsoft password reveal eye if we're using
 // our own custom reveal field
@@ -96,17 +72,15 @@ const EyeIcon = ({ isOpen }: { isOpen: boolean }) => {
 const EyeSymbol = ({
 	isOpen,
 	onClick,
-	error,
+	setPasswordButtonIsFocused,
 }: {
 	isOpen: boolean;
 	onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-	error?: string;
+	fieldIsFocused?: boolean;
+	setPasswordButtonIsFocused: (value: boolean) => void;
 }) => {
 	const buttonStyles = css`
-		border: ${error
-			? `2px solid var(--color-alert-error)`
-			: `1px solid var(--color-input-border)`};
-		border-left: none;
+		border: none;
 		border-radius: 0 4px 4px 0;
 		background-color: transparent;
 		cursor: pointer;
@@ -128,11 +102,41 @@ const EyeSymbol = ({
 			title="show or hide password text"
 			data-cy="password-input-eye-button"
 			aria-label="Show password"
+			onFocus={() => setPasswordButtonIsFocused(true)}
+			onBlur={() => setPasswordButtonIsFocused(false)}
 		>
 			<EyeIcon isOpen={isOpen} />
 		</button>
 	);
 };
+
+const removeBorder = css`
+	border: none;
+`;
+
+const wrapperStyles = (hasFocus?: boolean) => css`
+	display: flex;
+	border: 1px solid var(--color-input-border);
+	padding: 1px;
+	border-radius: 4px;
+	input {
+		margin-top: 0;
+	}
+	// FOCUS LOGIC
+	// Modern browsers which support :has
+	:has(:focus) {
+		border: 2px solid var(--color-input-text);
+		padding: 0;
+	}
+	// React-based fallback for browsers which don't support :has
+	${hasFocus ? `border: 2px solid var(--color-input-text);` : ''}
+	${hasFocus ? `padding: 0;` : ''}
+`;
+
+const labelStyles = css`
+	${textSans.medium({ fontWeight: 'bold' })}
+	color: var(--color-input-label);
+`;
 
 export const PasswordInput = ({
 	label,
@@ -143,50 +147,56 @@ export const PasswordInput = ({
 	autoComplete,
 }: PasswordInputProps) => {
 	const [passwordVisible, setPasswordVisible] = useState(false);
+	const [fieldIsFocused, setFieldIsFocused] = useState(false);
+	const [passwordButtonIsFocused, setPasswordButtonIsFocused] = useState(false);
+	const hasFocus = fieldIsFocused || passwordButtonIsFocused;
 
 	return (
-		<div
-			css={css`
-				display: flex;
-			`}
-		>
-			<div
-				css={[
-					css`
-						flex: 1;
-						align-self: flex-end;
-					`,
-				]}
-			>
-				<TextInput
-					error={error}
-					onChange={onChange}
-					label={label}
-					name="password"
-					supporting={supporting}
-					type={passwordVisible ? 'text' : 'password'}
-					autoComplete={autoComplete}
-					cssOverrides={[
-						noBorder(displayEye),
-						borderFix(displayEye),
-						paddingRight(displayEye),
-						disableAutofillBackground,
-						hideMsReveal(displayEye),
+		<>
+			<label htmlFor="password" css={labelStyles}>
+				{label}
+			</label>
+			<div css={wrapperStyles(hasFocus)}>
+				<div
+					css={[
+						css`
+							flex: 1;
+							align-self: flex-end;
+						`,
 					]}
-					theme={textInputTheme}
-				/>
-			</div>
+				>
+					<TextInput
+						error={error}
+						onChange={onChange}
+						onFocus={() => setFieldIsFocused(true)}
+						onBlur={() => setFieldIsFocused(false)}
+						label={''}
+						name="password"
+						supporting={supporting}
+						type={passwordVisible ? 'text' : 'password'}
+						autoComplete={autoComplete}
+						cssOverrides={[
+							removeBorder,
+							disableAutofillBackground,
+							hideMsReveal(displayEye),
+						]}
+						theme={textInputTheme}
+						id="password"
+					/>
+				</div>
 
-			{displayEye && (
-				<EyeSymbol
-					error={error}
-					isOpen={passwordVisible}
-					onClick={() => {
-						// Toggle visibility of password
-						setPasswordVisible((previousState) => !previousState);
-					}}
-				/>
-			)}
-		</div>
+				{displayEye && (
+					<EyeSymbol
+						isOpen={passwordVisible}
+						fieldIsFocused={fieldIsFocused}
+						onClick={() => {
+							// Toggle visibility of password
+							setPasswordVisible((previousState) => !previousState);
+						}}
+						setPasswordButtonIsFocused={setPasswordButtonIsFocused}
+					/>
+				)}
+			</div>
+		</>
 	);
 };

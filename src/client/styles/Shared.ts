@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { remSpace, space } from '@guardian/source-foundations';
+import { InputFieldState } from '../lib/hooks/useInputValidityState';
 
 export const disableAutofillBackground = css`
 	:-webkit-autofill {
@@ -52,5 +53,23 @@ export const secondaryButtonStyles = css`
 	color: var(--color-button-secondary-text);
 	&:hover {
 		background-color: var(--color-button-secondary-background-hover);
+	}
+`;
+
+export const textInputFocusStyles = (inputFieldState?: InputFieldState) => css`
+	:focus {
+		border-width: 2px;
+		${inputFieldState
+			? `
+		${
+			inputFieldState !== InputFieldState.EMPTY &&
+			`border-color: var(--color-input-text);`
+		}
+		${
+			inputFieldState === InputFieldState.INVALID &&
+			`border-color: var(--color-input-error);`
+		}
+		`
+			: `border-color: var(--color-input-text);`}
 	}
 `;
