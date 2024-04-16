@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { MinimalHeader } from '../components/MinimalHeader';
+import MinimalHeader from '../components/MinimalHeader';
 import { from, headline, remSpace } from '@guardian/source-foundations';
 import useClientState from '../lib/hooks/useClientState';
 import {

@@ -39,10 +39,10 @@ interface Props {
 	isJobs?: boolean;
 }
 
-export const MinimalHeader = ({ isJobs }: Props) => {
+export default function MinimalHeader({ isJobs }: Props) {
 	return (
 		<header css={headerStyles}>
 			<div css={logoStyles}>{isJobs ? <JobsLogo /> : <SvgGuardianLogo />}</div>
 		</header>
 	);
-};
+}
