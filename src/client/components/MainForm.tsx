@@ -81,6 +81,14 @@ const formStyles = (displayInline: boolean) => css`
 
 const buttonLinkStyles = css`
 	${textSans.small({ fontWeight: 'bold' })};
+	color: var(--color-link);
+	:hover {
+		color: var(--color-link);
+	}
+`;
+
+const errorSummaryStyles = css`
+	color: var(--color-alert-error);
 `;
 
 export const MainForm = ({
@@ -283,6 +291,7 @@ export const MainForm = ({
 					errorReportUrl={
 						showFormLevelReportUrl ? locations.REPORT_ISSUE : undefined
 					}
+					cssOverrides={errorSummaryStyles}
 				/>
 			)}
 			{recaptchaEnabled && (
