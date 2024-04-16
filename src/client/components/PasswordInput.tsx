@@ -120,6 +120,7 @@ const wrapperStyles = (hasFocus?: boolean) => css`
 	border: 1px solid var(--color-input-border);
 	padding: 1px;
 	border-radius: 4px;
+	margin-top: 4px;
 	input {
 		margin-top: 0;
 	}
@@ -160,7 +161,7 @@ export const PasswordInput = ({
 	const hasFocus = fieldIsFocused || passwordButtonIsFocused;
 
 	return (
-		<>
+		<div>
 			<label htmlFor="password" css={labelStyles}>
 				{label}
 			</label>
@@ -205,6 +206,6 @@ export const PasswordInput = ({
 					/>
 				)}
 			</div>
-		</>
+		</div>
 	);
 };
