@@ -4,7 +4,7 @@ import {
 	LinkProps,
 } from '@guardian/source-react-components';
 import React from 'react';
-import Link from './Link';
+import Link from '@/client/components/Link';
 
 export const ExternalLink = (props: LinkProps) => (
 	<Link {...props} rel="noopener noreferrer" />
