@@ -1,4 +1,5 @@
 import {
+	InlineError,
 	SvgEye,
 	SvgEyeStrike,
 	TextInput,
@@ -138,6 +139,13 @@ const labelStyles = css`
 	color: var(--color-input-label);
 `;
 
+const supportingTextStyles = css`
+	${textSans.xsmall()}
+	margin-top: 4px;
+	color: var(--color-alert-info);
+	margin: 2px 0 0;
+`;
+
 export const PasswordInput = ({
 	label,
 	error,
@@ -156,6 +164,8 @@ export const PasswordInput = ({
 			<label htmlFor="password" css={labelStyles}>
 				{label}
 			</label>
+			{error && <InlineError>{error}</InlineError>}
+			{supporting && <p css={supportingTextStyles}>{supporting}</p>}
 			<div css={wrapperStyles(hasFocus)}>
 				<div
 					css={[
@@ -166,13 +176,11 @@ export const PasswordInput = ({
 					]}
 				>
 					<TextInput
-						error={error}
 						onChange={onChange}
 						onFocus={() => setFieldIsFocused(true)}
 						onBlur={() => setFieldIsFocused(false)}
 						label={''}
 						name="password"
-						supporting={supporting}
 						type={passwordVisible ? 'text' : 'password'}
 						autoComplete={autoComplete}
 						cssOverrides={[
