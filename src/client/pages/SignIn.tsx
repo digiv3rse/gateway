@@ -1,22 +1,23 @@
 import React from 'react';
-import { SignInErrors } from '@/shared/model/Errors';
+import { RegistrationErrors, SignInErrors } from '@/shared/model/Errors';
 import { QueryParams } from '@/shared/model/QueryParams';
-import { generateSignInRegisterTabs } from '@/client/components/Nav';
-import { MainLayout } from '@/client/layouts/Main';
 import { MainForm } from '@/client/components/MainForm';
 import { buildUrlWithQueryParams } from '@/shared/lib/routeUtils';
 import { usePageLoadOphanInteraction } from '@/client/lib/hooks/usePageLoadOphanInteraction';
 import { EmailInput } from '@/client/components/EmailInput';
 import { PasswordInput } from '@/client/components/PasswordInput';
 import { css } from '@emotion/react';
-import { from, space, textSans } from '@guardian/source-foundations';
-import { Link } from '@guardian/source-react-components';
+import { space, textSans } from '@guardian/source-foundations';
 import { Divider } from '@guardian/source-react-components-development-kitchen';
 import { AuthProviderButtons } from '@/client/components/AuthProviderButtons';
-import { divider, socialButtonDivider } from '@/client/styles/Shared';
+import { divider } from '@/client/styles/Shared';
 import { GuardianTerms, JobsTerms } from '@/client/components/Terms';
 import { MainBodyText } from '@/client/components/MainBodyText';
 import { InformationBox } from '@/client/components/InformationBox';
+import { MinimalLayout } from '@/client/layouts/MinimalLayout';
+import Link from '@/client/components/Link';
+import locations from '@/shared/lib/locations';
+import { SUPPORT_EMAIL } from '@/shared/model/Configuration';
 
 export type SignInProps = {
 	queryParams: QueryParams;
@@ -29,30 +30,22 @@ export type SignInProps = {
 	isReauthenticate?: boolean;
 };
 
-const passwordInput = css`
-	margin-top: ${space[2]}px;
-
-	${from.mobileMedium} {
-		margin-top: ${space[3]}px;
-	}
-`;
-
 const resetPassword = css`
 	${textSans.small()}
 `;
 
-const Links = ({ children }: { children: React.ReactNode }) => (
-	<div
-		css={css`
-			margin-top: ${space[2]}px;
-			${from.tablet} {
-				margin-top: 6px;
-			}
-		`}
-	>
-		{children}
-	</div>
-);
+const socialButtonDivider = css`
+	margin-top: ${space[2]}px;
+	margin-bottom: 0;
+	color: var(--color-divider);
+	:before,
+	:after {
+		content: '';
+		flex: 1 1;
+		border-bottom: 1px solid var(--color-divider);
+		margin: 8px;
+	}
+`;
 
 const getErrorContext = (error: string | undefined) => {
 	if (error === SignInErrors.ACCOUNT_ALREADY_EXISTS) {
@@ -60,6 +53,14 @@ const getErrorContext = (error: string | undefined) => {
 			<>
 				We cannot sign you in with your social account credentials. Please enter
 				your account password below to sign in.
+			</>
+		);
+	} else if (error === RegistrationErrors.PROVISIONING_FAILURE) {
+		return (
+			<>
+				Please try signing in with your new account. If you are still having
+				trouble, please contact our customer service team at{' '}
+				<a href={locations.SUPPORT_EMAIL_MAILTO}>{SUPPORT_EMAIL}</a>
 			</>
 		);
 	}
@@ -73,15 +74,11 @@ const showAuthProviderButtons = (
 	if (socialSigninBlocked === false) {
 		return (
 			<>
-				<InformationBox withMarginTop>
+				<InformationBox>
 					{!isJobs && <GuardianTerms />}
 					{isJobs && <JobsTerms />}
 				</InformationBox>
-				<AuthProviderButtons
-					queryParams={queryParams}
-					marginTop={true}
-					providers={['social']}
-				/>
+				<AuthProviderButtons queryParams={queryParams} providers={['social']} />
 				<Divider
 					spaceAbove="loose"
 					displayText="or continue with"
@@ -110,21 +107,13 @@ export const SignIn = ({
 
 	usePageLoadOphanInteraction(formTrackingName);
 
-	const tabs = generateSignInRegisterTabs({
-		isActive: 'signin',
-		isReauthenticate,
-		queryParams,
-	});
-
 	return (
-		<MainLayout
+		<MinimalLayout
 			errorOverride={pageError}
 			errorContext={getErrorContext(pageError)}
-			tabs={tabs}
-			errorSmallMarginBottom={!!pageError}
 			pageHeader="Sign in"
-			pageSubText="One account to access all Guardian products."
 		>
+			<MainBodyText>One account to access all Guardian products.</MainBodyText>
 			{/* AuthProviderButtons component with show boolean */}
 			{showAuthProviderButtons(socialSigninBlocked, queryParams, isJobs)}
 			<MainForm
@@ -145,26 +134,21 @@ export const SignIn = ({
 				hasJobsTerms={isJobs && socialSigninBlocked}
 			>
 				<EmailInput defaultValue={email} />
-				<div css={passwordInput}>
-					<PasswordInput label="Password" autoComplete="current-password" />
-				</div>
-				<Links>
-					<Link
-						href={buildUrlWithQueryParams('/reset-password', {}, queryParams)}
-						cssOverrides={resetPassword}
-					>
-						Reset password
-					</Link>
-				</Links>
+				<PasswordInput label="Password" autoComplete="current-password" />
+				<Link
+					href={buildUrlWithQueryParams('/reset-password', {}, queryParams)}
+					cssOverrides={resetPassword}
+				>
+					Reset password
+				</Link>
 			</MainForm>
-			{/* divider */}
-			<Divider spaceAbove="tight" size="full" cssOverrides={divider} />
-			<MainBodyText smallText>
+			<Divider size="full" cssOverrides={divider} />
+			<MainBodyText>
 				Not signed in before?{' '}
 				<Link href={buildUrlWithQueryParams('/register', {}, queryParams)}>
-					Register for free
+					Create a free account
 				</Link>
 			</MainBodyText>
-		</MainLayout>
+		</MinimalLayout>
 	);
 };

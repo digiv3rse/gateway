@@ -1,12 +1,11 @@
 import React from 'react';
 import { RegistrationConsentsFormFields } from '@/shared/model/Consent';
 import { RegistrationNewslettersFormFields } from '@/shared/model/Newsletter';
-import { css } from '@emotion/react';
-import { space } from '@guardian/source-foundations';
-import { RegistrationMarketingConsentFormField } from '@/client/components/RegistrationMarketingConsentFormField';
 import { RegistrationNewsletterFormField } from '@/client/components/RegistrationNewsletterFormField';
 import { GeoLocation } from '@/shared/model/Geolocation';
 import { AppName } from '@/shared/lib/appNameUtils';
+import { RegistrationMarketingConsentFormField } from '@/client/components/RegistrationMarketingConsentFormField';
+import { ToggleSwitchList } from '@/client/components/ToggleSwitchList';
 
 interface RegistrationConsentsProps {
 	geolocation?: string;
@@ -15,18 +14,9 @@ interface RegistrationConsentsProps {
 	appName?: AppName;
 }
 
-const consentToggleCss = (noMarginBottom = false) => css`
-	display: flex;
-	margin-top: ${space[6]}px;
-	${noMarginBottom ? 'margin-bottom: 0;' : `margin-bottom: ${space[4]}px;`}
-	flex-direction: column;
-	gap: ${space[3]}px;
-`;
-
 export const RegistrationConsents = ({
 	geolocation,
 	useIdapi,
-	noMarginBottom,
 	appName,
 }: RegistrationConsentsProps) => {
 	// check if the app is Feast or not
@@ -52,27 +42,31 @@ export const RegistrationConsents = ({
 	}
 
 	return (
-		<div css={consentToggleCss(noMarginBottom)}>
+		<ToggleSwitchList>
 			{showSaturdayEdition && (
 				<RegistrationNewsletterFormField
 					id={RegistrationNewslettersFormFields.saturdayEdition.id}
-					label={`${RegistrationNewslettersFormFields.saturdayEdition.label} newsletter`}
-					context={RegistrationNewslettersFormFields.saturdayEdition.context}
+					title={`${RegistrationNewslettersFormFields.saturdayEdition.label} newsletter`}
+					description={
+						RegistrationNewslettersFormFields.saturdayEdition.context
+					}
 				/>
 			)}
 			{showFeast && (
 				<RegistrationNewsletterFormField
 					id={RegistrationNewslettersFormFields.feast.id}
-					label={`${RegistrationNewslettersFormFields.feast.label} newsletter`}
-					context={RegistrationNewslettersFormFields.feast.context}
+					title={`${RegistrationNewslettersFormFields.feast.label} newsletter`}
+					description={RegistrationNewslettersFormFields.feast.context}
 				/>
 			)}
 			{showMarketingConsent && (
 				<RegistrationMarketingConsentFormField
 					id={RegistrationConsentsFormFields.similarGuardianProducts.id}
-					label={RegistrationConsentsFormFields.similarGuardianProducts.label}
+					description={
+						RegistrationConsentsFormFields.similarGuardianProducts.label
+					}
 				/>
 			)}
-		</div>
+		</ToggleSwitchList>
 	);
 };

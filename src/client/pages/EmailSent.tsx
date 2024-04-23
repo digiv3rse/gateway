@@ -1,6 +1,4 @@
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
-import { Link } from '@guardian/source-react-components';
-import { MainLayout } from '@/client/layouts/Main';
 import { MainBodyText } from '@/client/components/MainBodyText';
 import { MainForm } from '@/client/components/MainForm';
 import { EmailInput } from '@/client/components/EmailInput';
@@ -12,13 +10,16 @@ import {
 	InformationBox,
 	InformationBoxText,
 } from '@/client/components/InformationBox';
+import { MinimalLayout } from '../layouts/MinimalLayout';
+import { css } from '@emotion/react';
+import Link from '../components/Link';
 
 type Props = {
+	pageHeader?: string;
 	email?: string;
 	changeEmailPage?: string;
 	resendEmailAction?: string;
 	queryString?: string;
-	showSuccess?: boolean;
 	errorMessage?: string;
 	noAccountInfo?: boolean;
 	recaptchaSiteKey?: string;
@@ -27,12 +28,16 @@ type Props = {
 	instructionContext?: string;
 };
 
+const sendAgainFormWrapperStyles = css`
+	white-space: nowrap;
+`;
+
 export const EmailSent = ({
+	pageHeader = 'Check your inbox',
 	email,
 	changeEmailPage,
 	resendEmailAction,
 	queryString,
-	showSuccess,
 	errorMessage,
 	noAccountInfo,
 	recaptchaSiteKey,
@@ -45,18 +50,18 @@ export const EmailSent = ({
 	const [recaptchaErrorContext, setRecaptchaErrorContext] =
 		useState<ReactNode>(null);
 	return (
-		<MainLayout
-			pageHeader="Check your email inbox"
-			successOverride={showSuccess ? 'Email sent' : undefined}
+		<MinimalLayout
+			pageHeader={pageHeader}
 			errorOverride={
 				recaptchaErrorMessage ? recaptchaErrorMessage : errorMessage
 			}
 			errorContext={recaptchaErrorContext}
+			imageId="email"
 		>
 			{children}
 			{email ? (
 				<MainBodyText>
-					We’ve sent an email to <b>{email}</b>
+					We’ve sent an email to <strong>{email}</strong>
 				</MainBodyText>
 			) : (
 				<MainBodyText>We’ve sent you an email.</MainBodyText>
@@ -67,19 +72,17 @@ export const EmailSent = ({
 				</MainBodyText>
 			) : (
 				<MainBodyText>
-					Please follow the instructions in this email.
+					Follow the instructions in this email to reset your password.
 				</MainBodyText>
 			)}
 			<MainBodyText>
-				<b>
-					For your security, the link in the email will expire in 60 minutes.
-				</b>
+				<strong>For your security, this link will expire in 60 minutes.</strong>
 			</MainBodyText>
 			<InformationBox>
 				<InformationBoxText>
-					Didn’t get the email? Check your spam
+					Didn’t get the email? Check your spam&#8288;
 					{email && resendEmailAction && (
-						<>
+						<span css={sendAgainFormWrapperStyles}>
 							,{!changeEmailPage ? <> or </> : <> </>}
 							<MainForm
 								formAction={`${resendEmailAction}${queryString}`}
@@ -90,17 +93,17 @@ export const EmailSent = ({
 								formTrackingName={formTrackingName}
 								disableOnSubmit
 								formErrorMessageFromParent={formError}
+								displayInline
 								submitButtonLink
 								hideRecaptchaMessage
 							>
 								<EmailInput defaultValue={email} hidden hideLabel />
 							</MainForm>
-						</>
+						</span>
 					)}
-					{changeEmailPage && <>, or</>}
 					{changeEmailPage && (
 						<>
-							{' '}
+							, or{' '}
 							<Link href={`${changeEmailPage}${queryString}`}>
 								try another address
 							</Link>
@@ -113,7 +116,7 @@ export const EmailSent = ({
 						If you don’t receive an email within 2 minutes you may not have an
 						account. Don’t have an account?{' '}
 						<Link href={`${buildUrl('/register')}${queryString}`}>
-							Register for free
+							Create an account for free
 						</Link>
 						.
 					</InformationBoxText>
@@ -125,6 +128,6 @@ export const EmailSent = ({
 					</ExternalLink>
 				</InformationBoxText>
 			</InformationBox>
-		</MainLayout>
+		</MinimalLayout>
 	);
 };

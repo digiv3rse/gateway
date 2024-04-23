@@ -34,6 +34,7 @@ export enum SignInErrors {
 export enum RegistrationErrors {
 	GENERIC = 'There was a problem registering, please try again.',
 	EMAIL_INVALID = 'Please enter a valid email address.',
+	PROVISIONING_FAILURE = 'Your account has been created but there was a problem signing you in.',
 }
 
 // shown at the top of the change password page when something goes wrong
@@ -56,9 +57,10 @@ export enum NameFieldErrors {
 
 // shown below the password input field as the user types a password (before they click the submit button)
 export enum ShortPasswordFieldErrors {
-	AT_LEAST_8 = 'At least 8 characters.',
-	MAXIMUM_72 = 'Maximum of 72 characters.',
-	COMMON_PASSWORD = 'Please use a password that is hard to guess.',
+	AT_LEAST_8 = 'At least 8 characters',
+	MAXIMUM_72 = 'Maximum of 72 characters',
+	WEAK_PASSWORD = 'Weak password: avoid passwords that are easy to guess',
+	STRONG_PASSWORD_REQUIRED = 'Strong password required',
 }
 
 export enum VerifyEmailErrors {

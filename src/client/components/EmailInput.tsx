@@ -1,10 +1,14 @@
 import { TextInput, TextInputProps } from '@guardian/source-react-components';
 import React from 'react';
-import { disableAutofillBackground } from '@/client/styles/Shared';
+import {
+	disableAutofillBackground,
+	textInputFocusStyles,
+} from '@/client/styles/Shared';
 import {
 	InputFieldState,
 	useInputValidityState,
 } from '@/client/lib/hooks/useInputValidityState';
+import { textInputTheme } from '../styles/Theme';
 
 interface EmailInputProps extends Omit<TextInputProps, 'label'> {
 	label?: string;
@@ -36,17 +40,23 @@ export const EmailInput: React.FC<EmailInputProps> = ({
 	}, [inputFieldState]);
 
 	return (
-		<TextInput
-			label={label}
-			name="email"
-			type="email"
-			autoComplete="email"
-			error={errorMessage}
-			cssOverrides={[disableAutofillBackground]}
-			onBlur={onBlur}
-			onInput={onInput}
-			onInvalid={onInvalid}
-			{...rest}
-		/>
+		<div>
+			<TextInput
+				label={label}
+				name="email"
+				type="email"
+				autoComplete="email"
+				error={errorMessage}
+				cssOverrides={[
+					disableAutofillBackground,
+					textInputFocusStyles(inputFieldState),
+				]}
+				onBlur={onBlur}
+				onInput={onInput}
+				onInvalid={onInvalid}
+				theme={textInputTheme}
+				{...rest}
+			/>
+		</div>
 	);
 };

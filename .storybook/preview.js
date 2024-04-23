@@ -7,34 +7,38 @@ import { fontFaces } from '@/client/lib/fonts';
 import { Breakpoints } from '@/client/models/Style';
 import clientStateDecorator from './clientStateDecorator';
 import { neutral } from '@guardian/source-foundations';
+import { Theme } from '@/client/styles/Theme';
 
 const GlobalStyles = () => (
-	<Global
-		styles={css`
-			${fontFaces}
-			html {
-				height: 100%;
-				box-sizing: border-box;
-			}
-			body {
-				height: 100%;
-				color: ${neutral[7]};
-			}
-			#storybook-root {
-				min-height: 100%;
-				display: flex;
-				flex-direction: column;
-			}
-			*,
-			*:before,
-			*:after {
-				box-sizing: inherit;
-			}
-			.grecaptcha-badge {
-				visibility: hidden;
-			}
-		`}
-	/>
+	<>
+		<Global
+			styles={css`
+				${fontFaces}
+				html {
+					height: 100%;
+					box-sizing: border-box;
+				}
+				body {
+					height: 100%;
+					color: ${neutral[7]};
+				}
+				#storybook-root {
+					min-height: 100%;
+					display: flex;
+					flex-direction: column;
+				}
+				*,
+				*:before,
+				*:after {
+					box-sizing: inherit;
+				}
+				.grecaptcha-badge {
+					visibility: hidden;
+				}
+			`}
+		/>
+		<Theme />
+	</>
 );
 
 /* Source provides a global utility that manages the appearance of focus styles. When enabled,

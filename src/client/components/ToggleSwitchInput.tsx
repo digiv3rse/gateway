@@ -1,10 +1,7 @@
 import React from 'react';
 import type { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import type { Props } from '@guardian/source-react-components';
 import { css } from '@emotion/react';
 import {
-	neutral,
-	success,
 	textSans,
 	focusHalo,
 	visuallyHidden,
@@ -33,16 +30,32 @@ const labelStyles = css`
 	user-select: none;
 	position: relative;
 	${textSans.small()};
-	display: flex;
-	align-items: center;
 	cursor: pointer;
-	flex-wrap: wrap;
+	border: 0;
+	margin: 0;
+	border-radius: 4px;
+	padding: ${space[2]}px ${space[2]}px ${space[3]}px ${space[2]}px;
+	border: ${switchVariables.border}px solid
+		var(--color-toggle-inactive-background);
+	display: grid;
+	grid-template-columns: calc(100% - ${switchComputedWidth}px) ${switchComputedWidth}px;
+
+	&:has(input:focus) {
+		${focusHalo};
+	}
+`;
+
+const labelTextContainerStyles = css`
+	display: flex;
+	flex-direction: column;
+	margin-right: ${space[3]}px;
 `;
 
 const siblingStyles = css`
 	input + span {
-		background-color: ${neutral[46]};
-		border: ${switchVariables.border}px solid ${neutral[46]};
+		background-color: var(--color-toggle-inactive-background);
+		border: ${switchVariables.border}px solid
+			var(--color-toggle-inactive-background);
 	}
 
 	input + span:before {
@@ -54,8 +67,9 @@ const siblingStyles = css`
 	}
 
 	input:checked + span {
-		background: ${success[400]};
-		border: ${switchVariables.border}px solid ${success[400]};
+		background: var(--color-toggle-active-background);
+		border: ${switchVariables.border}px solid
+			var(--color-toggle-active-background);
 	}
 
 	input:checked + span:before {
@@ -66,7 +80,7 @@ const siblingStyles = css`
 
 	input:checked + span:after {
 		left: 22px;
-		background: ${neutral[100]};
+		background: var(--color-toggle-active-switch);
 	}
 `;
 
@@ -100,8 +114,8 @@ const switchStyles = css`
 		width: 6px;
 		right: 10px;
 		opacity: 0;
-		border-bottom: 2px solid ${success[400]};
-		border-right: 2px solid ${success[400]};
+		border-bottom: 2px solid var(--color-toggle-active-background);
+		border-right: 2px solid var(--color-toggle-active-background);
 		transform: rotate(45deg);
 		transition-property: opacity;
 		transition-duration: 0.2s;
@@ -115,33 +129,30 @@ const switchStyles = css`
 		content: '';
 		position: absolute;
 		border-radius: 50%;
-		background: #fff;
+		background: var(--color-toggle-inactive-switch);
 		will-change: left;
 		transition: left 0.15s ease-in-out;
 	}
 `;
 
-const mainLabelStyles = css`
-	align-self: center;
+const titleStyles = css`
 	width: calc(100% - ${switchComputedWidth}px);
+	height: ${switchVariables.height}px;
+	color: var(--color-input-label);
+	${textSans.small({ fontWeight: 'bold' })};
+	display: flex;
+	align-items: center;
+	margin-bottom: ${space[1]}px;
 `;
 
-const contextLabelStyles = css`
+const descriptionStyles = css`
 	flex: 1;
-	margin-right: ${switchComputedWidth}px;
+	color: var(--color-toggle-text);
+	display: flex;
+	align-items: center;
 `;
 
-const imageStyles = (imagePath: string) => css`
-	align-self: flex-start;
-	width: 40px;
-	height: 40px;
-	margin-right: ${space[2]}px;
-	background-image: url('${imagePath}');
-	background-repeat: no-repeat;
-	background-size: cover;
-`;
-
-export interface ToggleSwitchInputProps extends Props {
+export interface ToggleSwitchInputProps {
 	/**
 	 * Whether the ToggleSwitch is checked.
 	 * Gateway uses the [uncontrolled approach](https://reactjs.org/docs/uncontrolled-components.html),
@@ -153,13 +164,13 @@ export interface ToggleSwitchInputProps extends Props {
 	 */
 	id?: string;
 	/**
-	 * Appears to the left of the switch by default.
+	 * Optional short title. Appears to the left of the switch.
 	 */
-	label?: string;
+	title?: string;
 	/**
-	 * Additional context to add to the label below the main label.
+	 * Long description of the context of the switch. Appears below the title, if provided.
 	 */
-	context?: string;
+	description?: string;
 	/**
 	 * Optional image to display to the left of the context
 	 */
@@ -168,18 +179,18 @@ export interface ToggleSwitchInputProps extends Props {
 
 export const ToggleSwitchInput = ({
 	id,
-	label,
+	title,
 	defaultChecked,
-	context,
-	imagePath,
-	cssOverrides,
+	description,
 }: ToggleSwitchInputProps): EmotionJSX.Element => {
 	const switchName = id ?? generateSourceId();
 	const labelId = descriptionId(switchName);
-
 	return (
-		<label id={labelId} css={[labelStyles, siblingStyles, cssOverrides]}>
-			<span css={mainLabelStyles}>{label}</span>
+		<label id={labelId} css={[labelStyles, siblingStyles]}>
+			<span css={labelTextContainerStyles}>
+				{title && <span css={titleStyles}>{title}</span>}
+				{description && <span css={descriptionStyles}>{description}</span>}
+			</span>
 			<input
 				css={inputStyles}
 				name={switchName}
@@ -193,8 +204,6 @@ export const ToggleSwitchInput = ({
 				aria-labelledby={labelId}
 				css={switchStyles}
 			></span>
-			{imagePath && <div css={imageStyles(imagePath)} />}
-			{context && <span css={contextLabelStyles}>{context}</span>}
 		</label>
 	);
 };

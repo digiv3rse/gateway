@@ -22,7 +22,7 @@ describe('New account review page', () => {
 		cy.get('input[name=email]').type(unregisteredEmail);
 		cy.get('[data-cy="main-form-submit-button"]').click();
 
-		cy.contains('Check your email inbox');
+		cy.contains('Check your inbox');
 		cy.contains(unregisteredEmail);
 		cy.contains('send again');
 		cy.contains('try another address');
@@ -41,13 +41,13 @@ describe('New account review page', () => {
 			cy.url().should('contain', '/welcome/review');
 
 			// Always shown
-			cy.get('fieldset').contains(
+			cy.get('label').contains(
 				'Allow the Guardian to analyse my signed-in data to improve marketing content',
 			);
 			cy.contains('What we mean by signed-in data');
 
 			// Only shown when CMP consented
-			cy.get('fieldset').contains(
+			cy.get('label').contains(
 				'Allow personalised advertising with my signed-in data',
 			);
 			cy.contains('Advertising is a crucial source of our funding');
@@ -96,7 +96,7 @@ describe('New account review page', () => {
 		cy.get('input[name=email]').type(unregisteredEmail);
 		cy.get('[data-cy="main-form-submit-button"]').click();
 
-		cy.contains('Check your email inbox');
+		cy.contains('Check your inbox');
 		cy.contains(unregisteredEmail);
 		cy.contains('send again');
 		cy.contains('try another address');
@@ -114,12 +114,12 @@ describe('New account review page', () => {
 
 			cy.url().should('contain', '/welcome/review');
 
-			cy.get('fieldset').contains(
+			cy.get('label').contains(
 				'Allow the Guardian to analyse my signed-in data to improve marketing content',
 			);
 			cy.contains('What we mean by signed-in data');
 
-			cy.get('fieldset').should(
+			cy.get('label').should(
 				'not.contain',
 				'Allow personalised advertising with my signed-in data',
 			);
